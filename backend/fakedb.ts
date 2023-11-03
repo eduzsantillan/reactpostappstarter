@@ -31,13 +31,10 @@ export const posts = [
   },
 ];
 
-export const addPost = (post: any) => {
-  //  Issues:
-  //  *     The request body contains the title, category, and image,
-  //  *     but the addPost function needs to add a unique id
-  //  *     and the id of the currently logged in user to the post.
-  post.id = 3;
-  post.userId = 2;
+export const addPost = (post: any, token: string) => {
+  const claims = JSON.parse(atob(token.split(".")[1]));
+  post.id = Math.max(...posts.map((post) => post.id)) + 1;
+  post.userId = claims.id;
   posts.push(post);
 };
 

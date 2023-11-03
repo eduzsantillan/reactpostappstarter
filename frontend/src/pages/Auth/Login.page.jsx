@@ -20,37 +20,59 @@ const LoginPage = () => {
     loginService(email, password);
   };
   return (
-    <div style={{ display: "flex", justifyContent: "center" }}>
-      <form onSubmit={onLogin}>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            gridGap: "20px",
-            background: "#d3d3d3",
-            padding: "50px",
-          }}
-        >
-          <h1>This is the login page</h1>
-          <input
-            placeholder="email"
-            name="email"
-            type="email"
-            required
-            style={{ minWidth: "320px", height: "26px" }}
-          />
-          <input
-            placeholder="password"
-            name="password"
-            type="password"
-            required
-            style={{ minWidth: "320px", height: "26px" }}
-          />
-          <button type="submit">login</button>
-          {authLoading ? <h2>Loading...</h2> : null}
-        </div>
-      </form>
+    <div className=" flex justify-center">
+      <div className="bg-white p-8 rounded-lg shadow-lg w-3/4 lg:w-5/12">
+        <h1 className="text-2xl font-semibold text-gray-700 mb-6 text-center">
+          Welcome
+        </h1>
+        <form onSubmit={onLogin}>
+          <div className="mb-4">
+            <label
+              htmlFor="email"
+              className="block text-gray-600 text-sm font-medium mb-2"
+            >
+              Email
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              className="w-full p-2 border rounded-lg"
+              placeholder="example@example.com"
+              required
+            />
+          </div>
+          <div className="mb-6">
+            <label
+              htmlFor="password"
+              className="block text-gray-600 text-sm font-medium mb-2"
+            >
+              Password
+            </label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              className="w-full p-2 border rounded-lg"
+              placeholder="********"
+              required
+            />
+          </div>
+          <div className="text-center">
+            <button
+              type="submit"
+              className="bg-indigo-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-indigo-700 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+            >
+              Login
+            </button>
+          </div>
+          {authLoading ? (
+            <h2 text-2xl font-semibold text-gray-800 mb-6 text-center>
+              Loading...
+            </h2>
+          ) : null}
+        </form>
+      </div>
     </div>
   );
 };

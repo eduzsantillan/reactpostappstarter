@@ -65,8 +65,9 @@ app.get("/api/posts/:id", (req, res) => {
  *     with an empty/incorrect payload (post)
  */
 app.post("/api/posts", (req, res) => {
+  const authHeader = req.headers.authorization;
   const incomingPost = req.body;
-  addPost(incomingPost);
+  addPost(incomingPost, authHeader || "");
   res.status(200).json({ success: true });
 });
 
