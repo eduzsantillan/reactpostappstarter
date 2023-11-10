@@ -44,14 +44,20 @@ app.post("/api/user/validation", (req, res) => {
 
 app.get("/api/posts", async (req, res) => {
   // Sleep delay goes here
+  await sleep(5000);
   res.json(posts);
 });
 
 // ⭐️ TODO: Implement this yourself
 app.get("/api/posts/:id", (req, res) => {
-  const id = req.params.id;
-  // The line below should be fixed.
-  res.json(posts[0]);
+  const id = Number(req.params.id);
+  const post: any = posts.find((post) => post.id === id);
+  if (!post) {
+    res.status(404).json({ error: "Post not found" });
+  } else {
+    post.author = findUserById(id).email;
+    res.json(post);
+  }
 });
 
 /**
@@ -69,6 +75,20 @@ app.post("/api/posts", (req, res) => {
   const incomingPost = req.body;
   addPost(incomingPost, authHeader || "");
   res.status(200).json({ success: true });
+});
+
+app.put("/api/posts/:id", (req, res) => {
+  const id = Number(req.params.id);
+  const post: any = posts.find((post) => post.id === id);
+  if (!post) {
+    res.status(404).json({ error: "Post not found" });
+  } else {
+    post.title = req.body.title;
+    post.category = req.body.category;
+    post.content = req.body.content;
+    post.image = req.body.image;
+    res.json(post);
+  }
 });
 
 app.listen(port, () => console.log("Server is running"));

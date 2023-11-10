@@ -1,23 +1,26 @@
 import { TextInput, Button, Group, Box } from "@mantine/core";
 import DOMAIN from "../../services/endpoint";
 import axios from "axios";
+import { useLoaderData } from "react-router-dom";
 import { useForm } from "@mantine/form";
 import { useNavigate } from "react-router-dom";
 
-function CreatePostPage() {
+export function EditPostPage() {
   const navigate = useNavigate();
+  const post = useLoaderData();
   const form = useForm({
     initialValues: {
-      title: "",
-      category: "",
-      image: "",
-      content: "",
+      title: post.title,
+      category: post.category,
+      content: post.content,
+      image: post.image,
     },
   });
 
   const handleSubmit = async (values) => {
-    const res = await axios.post(`${DOMAIN}/api/posts`, values);
-    if (res?.data.success) {
+    const res = await axios.put(`${DOMAIN}/api/posts/${post.id}`, values);
+    console.log(res);
+    if (res?.status === 200) {
       navigate("/posts");
     }
   };
@@ -53,12 +56,10 @@ function CreatePostPage() {
             type="submit"
             className="bg-indigo-600 text-white hover:bg-indigo-700 font-semibold py-2 px-4 rounded shadow-md drop-shadow"
           >
-            Create
+            Update
           </Button>
         </Group>
       </form>
     </Box>
   );
 }
-
-export default CreatePostPage;
